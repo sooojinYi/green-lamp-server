@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const port = 3000;
+const port = 8080;
+const models = require('./models');
 
 //json 형식의 데이터를 처리할 수 있게 설정하는 코드
 app.use(express.json());
@@ -18,25 +19,60 @@ app.get('/products',async(req,res)=>{
         "products":[
             {
                 "id":1,
-                "name":"아이방조명",
-                "price":70000,
+                "name":"거실조명",
+                "price":100000,
                 "seller":"그린",
-                "imageUrl":"image/products/product1.jpg"
+                "imageUrl":"/images/products/product1.jpg"
             },
             {
                 "id":2,
-                "name":"거실방조명",
-                "price":40000,
-                "seller":"그린",
-                "imageUrl":"image/products/product2.jpg"
+                "name":"부엌조명",
+                "price":990000,
+                "seller":"블랙",
+                "imageUrl":"/images/products/product2.jpg"
             },
             {
                 "id":3,
-                "name":"부엌조명",
-                "price":90000,
-                "seller":"그린",
-                "imageUrl":"image/products/product3.jpg"
+                "name":"화장실조명",
+                "price":340000,
+                "seller":"블루",
+                "imageUrl":"/images/products/product3.jpg"
             },
+            {
+                "id":4,
+                "name":"식당조명",
+                "price":1123000,
+                "seller":"핑크",
+                "imageUrl":"/images/products/product4.jpg"
+            },
+            {
+                "id":5,
+                "name":"학원조명",
+                "price":1340000,
+                "seller":"퍼플",
+                "imageUrl":"/images/products/product1.jpg"
+            },
+            {
+                "id":6,
+                "name":"침실조명",
+                "price":990000,
+                "seller":"블랙",
+                "imageUrl":"/images/products/product2.jpg"
+            },
+            {
+                "id":7,
+                "name":"절조명",
+                "price":340000,
+                "seller":"블루",
+                "imageUrl":"/images/products/product3.jpg"
+            },
+            {
+                "id":8,
+                "name":"교회조명",
+                "price":1123000,
+                "seller":"핑크",
+                "imageUrl":"/images/products/product4.jpg"
+            }
         ]
     });
 })
@@ -55,4 +91,14 @@ app.get('/products/:id',async(req,res)=>{
 //설정한 app을 실행 시키기
 app.listen(port, ()=>{
     console.log('그린램프 서버가 돌아가고 있습니다.');
+    models.sequelize
+    .sync()
+    .then(()=>{
+        console.log("db 연결성공");
+    })
+    .catch(function(err){
+        console.error(err);
+        console.log("db 연결에러");
+        process.exit();
+    })
 })
