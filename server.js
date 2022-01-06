@@ -5,7 +5,7 @@ const port = 8080;
 const models = require('./models');
 app.use(cors());
 //해당파일을 보여줄때 입력한 경도대로 보여주기 위해 세팅
-app.use("models/upload", express.static("upload"));
+app.use("/upload", express.static("upload"));
 
 //업로드 이미지를 관리하는 스토리지 서버를연결 멀터를 쓰겠다.
 const multer = require('multer');
@@ -16,7 +16,7 @@ const upload = multer({
     storage: multer.diskStorage({
         destination: function (req, file, cb) {
            //어디에 저장할거야? upload/
-            cb(null, 'models/upload')
+            cb(null, 'upload')
         },
         filename: function (req, file, cb) {
            //어떤이름으로 저장할거야? 파일안에 있는 오리지널이름으로 저장하겠다.
