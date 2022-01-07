@@ -89,6 +89,7 @@ app.post('/products', async(req,res)=>{
     }).then((result)=>{
         console.log("상품생성결과 : ",result);
         res.send({
+            //확인데이터
             result,
         })
     })
@@ -127,6 +128,32 @@ app.post('/image', upload.single('image'), (req,res)=>{
     console.log(file);
     res.send({
         imageUrl: file.destination + "/" + file.filename
+    })
+})
+
+//delete 삭제하기
+app.delete('/products/:id',async(req,res)=>{
+    const params = req.params;
+    console.log('삭제');
+    models.Product.destroy({where: { id: params.id }})
+    .then(res.send(
+        "상품이 삭제되었습니다."
+    ));
+})
+//banners 로 요청이 왔을때 응답하기
+app.get("/banners",(req,res)=>{
+    models.Banner.findAll({
+        limit:4,
+        attributes: ["imageUrl","id","href"]
+    })
+    .then((result)=>{
+        res.send({
+            banners: result,
+        })
+    })
+    .catch((error)=>{
+        console.log(error);
+        res.send('에러가 발생했습니다.');
     })
 })
 
